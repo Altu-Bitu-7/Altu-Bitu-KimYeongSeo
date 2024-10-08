@@ -2,8 +2,8 @@
 using namespace std;
 
 const int SIZE = 19;
-int stage[SIZE][SIZE] = {0, };  // board -> stage
-int win_col = -1, win_row = -1, black_or_white = 0;  // winnerColor -> black_or_white
+int stage[SIZE][SIZE] = {0, };  
+int win_col = -1, win_row = -1, black_or_white = 0; 
 
 int dx[] = {1, 0, 1, -1};  // 방향 변화에 따른 행렬의 변화
 int dy[] = {0, 1,  1, 1};
@@ -23,7 +23,7 @@ bool five(int x, int y, int color){
         int prev_col;
         int prev_row;
         
-        while (correct(nx, ny) && stage[nx][ny] == color){  // board -> stage
+        while (correct(nx, ny) && stage[nx][ny] == color){  
             count++;
             nx += dx[i];
             ny += dy[i];
@@ -32,7 +32,7 @@ bool five(int x, int y, int color){
         // 6목은 승리 조건이 아님 -> 양방향을 모두 봐줘야 함
         nx = x - dx[i];
         ny = y - dy[i];
-        while (correct(nx, ny) && stage[nx][ny] == color){  // board -> stage
+        while (correct(nx, ny) && stage[nx][ny] == color){              
             count++;
             nx -= dx[i];
             ny -= dy[i];
@@ -42,14 +42,13 @@ bool five(int x, int y, int color){
             // 이전에 돌이 놓인 좌표가 있으면 6목이므로 제외
             prev_col = x - dx[i];
             prev_row = y - dy[i];
-            if (correct(prev_col, prev_row) && stage[prev_col][prev_row] == color){  // board -> stage
-                continue;
+            if (correct(prev_col, prev_row) && stage[prev_col][prev_row] == color){                  continue;
             }
 
             // 출력해야 하는 가장 왼쪽에 있는 돌의 좌표
             win_col = x;
             win_row = y;
-            black_or_white = color;  // winnerColor -> black_or_white
+            black_or_white = color;
             return true;
         }
     }
@@ -60,15 +59,15 @@ int main() {
     // 입력 
     for (int i = 0; i < SIZE; i++){
         for (int j = 0; j < SIZE; j++){
-            cin >> stage[i][j];  // board -> stage, 초기화
+            cin >> stage[i][j];   //초기화
         }
     }
 
     // 보드 전체를 돌며 승리자 찾기
     for (int i = 0; i < SIZE; i++){
         for (int j = 0; j < SIZE; j++) {
-            if (stage[i][j] != 0) {  // board -> stage
-                if (five(i, j, stage[i][j])){  // board -> stage
+            if (stage[i][j] != 0) {                  
+                if (five(i, j, stage[i][j])){                      
                     break; 
                 }
             }
@@ -76,9 +75,10 @@ int main() {
     }
 
     // 결과 출력
-    if (black_or_white != 0){  // winnerColor -> black_or_white
+    if (black_or_white != 0){ 
         cout << black_or_white << "\n" << win_col + 1 << " " << win_row + 1 << endl;
-    } else {
+    } 
+    else{
         cout << 0 << '\n';  // 승리자가 없는 경우
     }
 

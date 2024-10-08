@@ -15,7 +15,7 @@ bool correct(int x, int y){
 
 // 돌의 개수 확인하는 함수
 bool five(int x, int y, int color){
-    for (int i = 0; i <4; i++) {
+    for (int i = 0; i <4; i++){
         int count = 1;
         int nx = x + dx[i];
         int ny = y + dy[i];

@@ -2,55 +2,46 @@
 #include <queue>
 using namespace std;
 
-int n, x, y, m;
-int fam[101][101] = {0, };  // 최대 입력값이 100이므로 인접 행렬 사용
-bool visited[101] = {false, };  // 방문 여부 배열 초기화
-int number[101]={0, };  // 촌수를 저장할 배열
+const int MAX = 101;  // 상수 MAX를 선언하여 101로 설정
 
-void bfs(int cal){
+int n, x, y, m;
+int fam[MAX][MAX] = {0, };
+bool visited[MAX] = {false, }; 
+int number[MAX] = {0, };  // 촌수를 저장할 배열
+
+void bfs(int cal) {
     queue<int> q;
     q.push(cal);
-    visited[cal] = true;  
+    visited[cal] = true;  // 시작 노드를 방문 표시
     
-    while (!q.empty()){
+    while (!q.empty()) {
         int fir = q.front();
         q.pop();
 
-
-
-        for (int i = 1; i<=n; i++){ 
-
-            if (fam[fir][i]==1 && !visited[i]){ 
+        for (int i = 1; i <= n; i++) {  // 1번부터 n번까지 탐색
+            if (fam[fir][i] == 1 && !visited[i]) {  // 아직 방문하지 않은 경우
                 q.push(i);
-                visited[i] = true; 
-
-                number[i] = number[fir]+1;  // 촌수는 현재 노드의 촌수 + 1
+                visited[i] = true;  // 방문 표시
+             number[i] = number[fir] + 1;  // 촌수는 현재 노드의 촌수 + 1
             }
         }
     }
 }
 
 int main() {
-    //입력
     cin >> n >> x >> y >> m;
 
-    for (int i = 0; i < m; i++){
+    for (int i = 0; i < m; i++) {
         int p1, p2;
         cin >> p1 >> p2;
-
-        fam[p1][p2] = fam[p2][p1]= 1; 
+        fam[p1][p2] = fam[p2][p1] = 1;  // 관계 설정
     }
 
+    bfs(x);  // 시작점 x에서 BFS 탐색
 
-    //연산
-    bfs(x);  
-
-
-    //출력
-    if(!visited[y]){  // 친척 관계가 없는 경우
+    if (!visited[y]) {  // y에 도달하지 못한 경우
         cout << -1;
-    } 
-    else {
+    } else {
         cout << number[y];  // y까지의 촌수 출력
     }
 
